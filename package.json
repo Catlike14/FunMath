@@ -1,0 +1,16 @@
+{
+  "name": "funmath",
+  "version": "1.0.0",
+  "description": "Random experiments",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mattia Alfonso",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  }
+}
