@@ -3,7 +3,7 @@ import Konva from 'konva';
 const sceneWidth = 1000;
 const sceneHeight = 1000;
 
-const RAY_POINT = 15;
+const RAY_POINT = 1;
 const SIDES = 6;
 const STROKE_WIDTH = 2;
 const MAX_ITERATIONS = 50000;
