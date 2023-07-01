@@ -1,29 +1,23 @@
 import { Point } from "./Point";
+import { Polygon, PolygonInterface } from "./Polygon";
 import { Vertex } from "./Vertex";
 
-export class RegularPolygon {
-  center: Point;
-  sides: number;
-  radius: number;
-  
-  private _vertices: Vertex[];
+export class RegularPolygon implements PolygonInterface {
+  private sides: number;
+  private center: Point;
+  private radius: number;
+  private polygon: Polygon;
 
   constructor(center: Point, sides: number, radius: number) {
-    if (sides < 3) throw new Error("A polygon must have at least 3 sides.");
     if (radius <= 0) throw new Error("Radius must be greater than 0.");
-
+    
     this.center = center;
     this.sides = sides;
     this.radius = radius;
+    this.polygon = new Polygon(this.calculateVertices());
   }
 
-  getVertices(): Vertex[] {
-    if (this._vertices) return this._vertices;
-    this._vertices = this._calculateVertices();
-    return this._vertices;
-  }
-
-  private _calculateVertices(): Vertex[] {
+  private calculateVertices(): Vertex[] {
     const vertices: Vertex[] = [];
     const angle = (2 * Math.PI) / this.sides;
 
@@ -37,29 +31,19 @@ export class RegularPolygon {
     return vertices;
   }
 
+  getVertices(): Vertex[] {
+    return this.polygon.getVertices();
+  }
+
+  setVertices() {
+    throw new Error("Cannot set vertices of a regular polygon.");
+  }
+
   getRandomPointInside(): Point {
-    const vertices = this.getVertices();
-    const { vertex, vertexIndex } = this.getRandomVertex();
-
-    const nextVertexIndex = (vertexIndex + 1) % this.sides;
-    const nextVertex = vertices[nextVertexIndex];
-
-    const prevVertexIndex = (vertexIndex + this.sides - 1) % this.sides;
-    const prevVertex = vertices[prevVertexIndex];
-
-    const a = Math.random();
-    const b = Math.random() * (1 - a);
-
-    const randomX = vertex.x + b * (nextVertex.x - vertex.x) + a * (prevVertex.x - vertex.x);
-    const randomY = vertex.y + b * (nextVertex.y - vertex.y) + a * (prevVertex.y - vertex.y);
-
-    return { x: randomX, y: randomY };
+    return this.polygon.getRandomPointInside();
   }
 
   getRandomVertex() {
-    const vertices = this.getVertices();
-    const vertexIndex = Math.floor(Math.random() * this.sides);
-    const vertex = vertices[vertexIndex];
-    return { vertex, vertexIndex };
+    return this.polygon.getRandomVertex();
   }
 }

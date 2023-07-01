@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { Line, Point, RegularPolygon } from '../geometry';
+import { Line, Point, RegularPolygon } from 'src/geometry';
 
 const sceneWidth = 1000;
 const sceneHeight = 1000;
@@ -9,7 +9,7 @@ const SIDES = 6;
 const STROKE_WIDTH = 2;
 const MAX_ITERATIONS = 50000;
 const VELOCITY = 1000;
-const RESPONSIVE = true;
+const RESPONSIVE = false;
 const ANIMATED = true;
 
 const stage = new Konva.Stage({
@@ -107,9 +107,10 @@ function drawLine(line, layer) {
   return konvaLine;
 }
 
+fitStageIntoParentContainer();
+
 if (RESPONSIVE) {
-  fitStageIntoParentContainer();
   window.addEventListener('resize', fitStageIntoParentContainer);
-} else {
-  layer.batchDraw();
 }
+
+layer.batchDraw();
