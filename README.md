@@ -7,6 +7,9 @@ Open [http://localhost:1234](http://localhost:1234)
 ## Hexagon 001
 Hexagon chaos game with some setting for tinkering (check index.js)
 
+![](src/hex1/screen1.jpg?raw=true)
+
+
 `RAY_POINT` ray of the generated points (they're small circles)
 
 `SIDES` number of sides/vertex of the polygon
