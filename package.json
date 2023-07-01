@@ -6,12 +6,20 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
+    "lint": "eslint --ext js,jsx,ts,tsx src --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mattia Alfonso",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.9.3"
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "eslint": "^8.44.0",
+    "eslint-config-standard-with-typescript": "^36.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "parcel": "^2.9.3",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "konva": "^9.2.0"

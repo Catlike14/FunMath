@@ -15,12 +15,12 @@ const stage = new Konva.Stage({
   container: 'container',
   width: sceneWidth,
   height: sceneHeight,
-}); 
+});
 
 const layer = new Konva.Layer();
 stage.add(layer);
 
-const vertices = calculatePolygonVertices(stage.width() / 2, stage.height() / 2, SIDES, sceneWidth *.4);
+const vertices = calculatePolygonVertices(stage.width() / 2, stage.height() / 2, SIDES, sceneWidth * .4);
 drawPolygon(vertices, layer);
 
 var lastPoint = generateRandomPointInsidePolygon(vertices);
@@ -29,19 +29,17 @@ var i = 0;
 const debugText = document.getElementById('debug-text');
 
 if (ANIMATED) {
-  function update() {
+  const animation = new Konva.Animation(() => {
     if (i > MAX_ITERATIONS) return;
-  
+
     for (var v = 0; v < VELOCITY; v++) {
       lastPoint = hexGameIteration(vertices, lastPoint);
       i++;
     }
-  
+
     layer.batchDraw();
     debugText.innerHTML = `Iteration: ${i}`;
-  }
-
-  const animation = new Konva.Animation(update, layer);
+  }, layer);
   animation.start();
 } else {
   for (i = 0; i < MAX_ITERATIONS; i++) {
@@ -53,10 +51,8 @@ function hexGameIteration(vertices, lastPoint) {
   const randomVertex = getRandomVertex(vertices)[0];
   const line = [lastPoint.x, lastPoint.y, randomVertex[0], randomVertex[1]];
 
-  const pointInLine = getPointInLine(line, 2/3);
-  const pointAsLine = [pointInLine.x, pointInLine.y, pointInLine.x+1, pointInLine.y+1];
-  drawLine(pointAsLine, layer);
-  // drawPoint(pointInLine.x, pointInLine.y, layer);
+  const pointInLine = getPointInLine(line, 2 / 3);
+  drawPoint(pointInLine.x, pointInLine.y, layer);
   return pointInLine;
 }
 
@@ -70,15 +66,18 @@ function fitStageIntoParentContainer() {
 }
 
 function drawPoint(x, y, layer) {
-  const point = new Konva.Circle({
+  const pointAsLine = [x, y, x+RAY_POINT, y+RAY_POINT];
+  return drawLine(pointAsLine, layer);
+
+  /* const point = new Konva.Circle({
     x,
     y,
     radius: RAY_POINT,
-    fill: 'blue'
+    fill: 'blue',
   });
-  
+
   layer.add(point);
-  return point;
+  return point; */
 }
 
 function drawPolygon(vertices, layer) {
@@ -122,19 +121,19 @@ function calculatePolygonVertices(x, y, sides, radius) {
 function generateRandomPointInsidePolygon(vertices) {
   const sides = vertices.length / 2;
   const [randomVertex, randomVertexIndex] = getRandomVertex(vertices);
-  
+
   const nextVertexIndex = (randomVertexIndex + 1) % sides;
   const nextVertex = vertices.slice(nextVertexIndex * 2, nextVertexIndex * 2 + 2);
-  
+
   const prevVertexIndex = (randomVertexIndex + sides - 1) % sides;
   const prevVertex = vertices.slice(prevVertexIndex * 2, prevVertexIndex * 2 + 2);
-  
+
   const randomT = Math.random();
   const randomS = Math.random() * (1 - randomT);
-  
+
   const randomX = randomVertex[0] + randomS * (nextVertex[0] - randomVertex[0]) + randomT * (prevVertex[0] - randomVertex[0]);
   const randomY = randomVertex[1] + randomS * (nextVertex[1] - randomVertex[1]) + randomT * (prevVertex[1] - randomVertex[1]);
-  
+
   return { x: randomX, y: randomY };
 }
 
