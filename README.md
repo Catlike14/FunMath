@@ -19,3 +19,9 @@ Hexagon chaos game with some setting for tinkering (check index.js)
 `VELOCITY` how many point it computes at each update (when animated)
 
 `ANIMATED` show the generation in real-time (if true, it becomes slow)
+
+## Todo
+- Improve Polygon/RegularPolygon hierarchy instead of sharing a common interface and wrapping
+- Test with other driver
+- Implement responsiveness on Canvas
+- Write a configuration for each addObject in Layer

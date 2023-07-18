@@ -1,23 +1,21 @@
 import { Point } from "./Point";
-import { Vertex } from "./Vertex";
 
 export interface PolygonInterface {
-  getVertices(): Vertex[];
-  setVertices(vertices: Vertex[]): void;
+  getVertices(): Point[];
+  setVertices(vertices: Point[]): void;
   getRandomPointInside(): Point;
-  getRandomVertex(): { vertex: Vertex, vertexIndex: number };
-
+  getRandomVertex(): { vertex: Point, vertexIndex: number };
 }
 
 export class Polygon implements PolygonInterface {
-  protected vertices: Vertex[];
+  protected vertices: Point[];
 
-  constructor(vertices: Vertex[]) {
+  constructor(vertices: Point[]) {
     this.setVertices(vertices);
   }
 
-  getVertices(): Vertex[] { return this.vertices; }
-  setVertices(vertices: Vertex[]) {
+  getVertices(): Point[] { return this.vertices; }
+  setVertices(vertices: Point[]) {
     if (vertices.length < 3) throw new Error("A polygon must have at least 3 sides.");
     this.vertices = vertices;
   }
@@ -25,17 +23,17 @@ export class Polygon implements PolygonInterface {
   getRandomPointInside(): Point {
     const { vertex, vertexIndex } = this.getRandomVertex();
 
-    const nextVertexIndex = (vertexIndex + 1) % this.vertices.length;
-    const nextVertex = this.vertices[nextVertexIndex];
+    const nextPointIndex = (vertexIndex + 1) % this.vertices.length;
+    const nextPoint = this.vertices[nextPointIndex];
 
-    const prevVertexIndex = (vertexIndex + this.vertices.length - 1) % this.vertices.length;
-    const prevVertex = this.vertices[prevVertexIndex];
+    const prevPointIndex = (vertexIndex + this.vertices.length - 1) % this.vertices.length;
+    const prevPoint = this.vertices[prevPointIndex];
 
     const a = Math.random();
     const b = Math.random() * (1 - a);
 
-    const randomX = vertex.x + b * (nextVertex.x - vertex.x) + a * (prevVertex.x - vertex.x);
-    const randomY = vertex.y + b * (nextVertex.y - vertex.y) + a * (prevVertex.y - vertex.y);
+    const randomX = vertex.x + b * (nextPoint.x - vertex.x) + a * (prevPoint.x - vertex.x);
+    const randomY = vertex.y + b * (nextPoint.y - vertex.y) + a * (prevPoint.y - vertex.y);
 
     return { x: randomX, y: randomY };
   }

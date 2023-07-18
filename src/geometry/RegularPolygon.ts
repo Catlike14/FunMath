@@ -1,6 +1,5 @@
 import { Point } from "./Point";
 import { Polygon, PolygonInterface } from "./Polygon";
-import { Vertex } from "./Vertex";
 
 export class RegularPolygon implements PolygonInterface {
   private sides: number;
@@ -17,8 +16,8 @@ export class RegularPolygon implements PolygonInterface {
     this.polygon = new Polygon(this.calculateVertices());
   }
 
-  private calculateVertices(): Vertex[] {
-    const vertices: Vertex[] = [];
+  private calculateVertices(): Point[] {
+    const vertices: Point[] = [];
     const angle = (2 * Math.PI) / this.sides;
 
     for (let i = 0; i < this.sides; i++) {
@@ -31,7 +30,7 @@ export class RegularPolygon implements PolygonInterface {
     return vertices;
   }
 
-  getVertices(): Vertex[] {
+  getVertices(): Point[] {
     return this.polygon.getVertices();
   }
 
